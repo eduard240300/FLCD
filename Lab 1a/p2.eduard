@@ -1,0 +1,18 @@
+// verify if a number is prime
+
+start
+let integer a
+let integer i
+let boolean isPrime = false
+read a
+for i from 1 to ( a / 2 )
+	if ( a % i ) == 0 then
+		isPrime = true
+	stop if
+stop for
+if isPrime == true then
+	print "The number is prime !"
+else then
+	print "The number isn't prime !"
+stop if
+stop
