@@ -21,7 +21,7 @@ character
 integer
 boolean
 string
-letr
+let
 while
 if
 else

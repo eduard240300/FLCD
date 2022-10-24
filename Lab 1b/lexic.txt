@@ -24,6 +24,6 @@ Alphabet:
 		3.boolean
 			boolean = "true" | "false"
 		4.string
-			constchar = """ string "
+			constchar = """ string """
 			string = char{char}
 			char = letter | digit

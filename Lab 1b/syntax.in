@@ -10,11 +10,12 @@ simplstmt = assignstmt | iostmt
 assignstmt = identifier "=" expression
 expression = expression "+" term | expression "-" term | expression "%" term |term
 term = term "*" factor | term "/" factor | factor | integer
-factor = "(" expression ")" | identifier
+factor = "(" expression ")" | identifier | indexedIdentifier
+indexedIdentifier = indentifier "[" number "]"
 iostmt = ( "read" | "print" ) identifier
 structstmt = ifstmt | whilestmt | forstmt
 ifstmt = "if" condition "then" stmtlist ["elif" condition "then"] ["else then" stmtlist] "stop if"
 whilestmt = "while" condition "do" stmtlist "stop while"
-forstmt = "for" identifier "from" expression "to" expression "then" stmtlist "stop for"
+forstmt = "for" ( identifier | indexedIdentifier ) "from" expression "to" expression "then" stmtlist "stop for"
 condition = expression relation expression
 relation = "<" | "<=" | "==" | "!=" | ">=" | ">"
