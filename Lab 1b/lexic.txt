@@ -12,7 +12,7 @@ Alphabet:
 	b.identifiers
 		-a sequence of letters and digits, such that the first character is a letter; the rule is:
 		identifier = letter {letter | digit}
-		letter = "A" | "B" | . ..| "Z" | "a" | "b" | ... | "z"
+		letter = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
         nonzerodigit = "1" | "2" | ... | "9"
 		digit = "0" | nozerodigit
 	c.constants
@@ -24,6 +24,6 @@ Alphabet:
 		3.boolean
 			boolean = "true" | "false"
 		4.string
-			constchar = """ string """
+			constchar = """ string "
 			string = char{char}
 			char = letter | digit
