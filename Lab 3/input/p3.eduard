@@ -1,0 +1,12 @@
+start
+let integer n
+let integer i
+let integer tempNumber
+let integer sum = 0
+read n
+for i from 1 to n then
+	read tempNumber
+	sum = sum + tempNumber
+end for
+print tempNumber
+stop

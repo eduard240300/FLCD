@@ -5,8 +5,8 @@ let integer a
 let integer i
 let boolean isPrime = false
 read a
-for i from 1 to (a/2) then
-	if (a%i) == 0 then
+for i from 1 to ( a / 2 ) then
+	if ( a % i ) == 0 then
 		isPrime = true
 	stop if
 stop for
