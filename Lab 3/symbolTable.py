@@ -36,7 +36,7 @@ class symbolTable:
             index += 1
         return self.__getHashPosition(symbol, index)
 
-    def add(self, symbol):
+    def addOrGet(self, symbol):
         if self.__find(symbol) is not None:
             return self.__find(symbol)
         else:

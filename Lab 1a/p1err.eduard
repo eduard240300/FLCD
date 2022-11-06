@@ -6,13 +6,13 @@ let integer 1a // 1a is not permited
 let integer i
 let boolean isPrime = false
 read a
-for i from 1 to ( a / 2 ) then
-	if ( a % i ) == 0 then
+for i from 1 to (a/2) then
+	if (a%i) == 0 then
 		isPrime = true
 	stop if
 stop for
 if isPrime == true then
-	print "The number is prime ! // quotes are not closed 
+	print "The number is prime ! // quotes are not closed
 else then
 	print "The number isn't prime !"
 stop if

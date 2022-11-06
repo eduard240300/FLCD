@@ -3,13 +3,13 @@ let integer 1a
 let integer i
 let boolean isPrime = false
 read a
-for i from 1 to ( a / 2 ) then
-	if ( a % i ) == 0 then
+for i from 1 to (a/2) then
+	if (a%i) == 0 then
 		isPrime = true
 	stop if
 stop for
 if isPrime == true then
-	print "The number is prime !"
+	print "The number is prime !
 else then
 	print "The number isn't prime !"
 stop if
