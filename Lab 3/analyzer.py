@@ -53,6 +53,7 @@ class Analyzer:
     def __removeSeparators(self, splitContents):
         newSplitContents = []
 
+        splitContents = self.__split(splitContents, ['\t', ' ', '\n'], '')
         for index in range(len(splitContents)):
             word = splitContents[index].replace('\t', '')\
                 .replace('\n', '').replace(' ', '')
