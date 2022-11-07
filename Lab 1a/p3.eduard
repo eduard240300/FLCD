@@ -1,3 +1,5 @@
+// compute the sum of n numbers
+
 start
 let integer n
 let integer i
