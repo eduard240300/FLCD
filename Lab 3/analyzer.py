@@ -111,7 +111,7 @@ class Analyzer:
 
         return splitContents
 
-    def __addToSTAnd__PIF(self, type, word):
+    def __addToSTAndPIF(self, type, word):
         if type == 'constant':
             self.__STConstants.addOrGet(word)
         elif type == 'identifier':
@@ -134,11 +134,11 @@ class Analyzer:
                 if word.__contains__('str_'):
                     index = int(word.replace('str_', ''))
                     currentString = self.__strings[index]
-                    self.__addToSTAnd__PIF('constant', currentString)
+                    self.__addToSTAndPIF('constant', currentString)
                 elif word.__contains__('char'):
                     index = int(word.replace('char_', ''))
                     currentChar = self.__chars[index]
-                    self.__addToSTAnd__PIF('constant', currentChar)
+                    self.__addToSTAndPIF('constant', currentChar)
                 else:
                     type = ''
                     if word in ['true', 'false']:  # boolean
@@ -149,7 +149,7 @@ class Analyzer:
                         type = 'constant'
                     else:
                         self.__lexicalErrors.append(word + " is not permitted as an identifier's name!")
-                    self.__addToSTAnd__PIF(type, word)
+                    self.__addToSTAndPIF(type, word)
 
         self.__PIF.translateToPositions(self.__STIdentifiers, self.__STConstants)
 

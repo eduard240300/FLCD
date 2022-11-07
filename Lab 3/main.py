@@ -2,7 +2,7 @@ from analyzer import Analyzer
 
 class Main():
     def __init__(self):
-        self.analyzer = Analyzer('./input/p2.eduard', './input/token.in')
+        self.analyzer = Analyzer('./input/p3.eduard', './input/token.in')
 
     def outputPIF(self, PIF):
         f = open("PIF.out", "w")

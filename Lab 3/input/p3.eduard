@@ -7,6 +7,6 @@ read n
 for i from 1 to n then
 	read tempNumber
 	sum = sum + tempNumber
-end for
+stop for
 print tempNumber
 stop
