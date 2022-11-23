@@ -14,9 +14,9 @@ def run_menu(fa):
         choice = int(input(">> "))
         if choice > 6:
             print("Invalid command!\n")
-        if choice == 0:
+        elif choice == 0:
             return
-        if choice == 6:
+        elif choice == 6:
             sequence = input("Sequence: ")
             returnPair = fa.isAccepted(sequence)
             print(returnPair[1])
