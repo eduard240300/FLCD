@@ -1,3 +1,5 @@
+from recursiveDescendant import RecursiveDescendant
+
 class Grammar:
     def __init__(self, fileName):
         file = open(fileName, 'r')
@@ -33,33 +35,9 @@ class Grammar:
     def __expand(self, config):
         pass
 
-    def cfgCheck(self, config):
-        while (config['state'] != 'f') and (config['state'] != 'e'):
-            if config['state'] == 'q':
-                if (config['position'] == config['length'] + 1) and len(config['inputStack']) == 0:
-                    config = self.__success(config)
-                else:
-                    if self.__head(config['inputStack']) == 'A':
-                        config = self.__expand(config)
-                    else:
-                        if self.__head(config['inputStack'] == 'ai'):
-                            config = self.__advance(config)
-                        else:
-                            config = self.__momentaryInsuccess(config)
-            else:
-                if config['state'] == 'b':
-                    if head('workingState') == 'a':
-                        config = self.__back(config)
-                    else:
-                        config = self.__anotherTry(config)
-        if config['state'] == 'e':
-            print('Error')
-            return null
-        else:
-            print('Sequence accepted')
-            return self.__buildStringOfProd(config['workingState'])
-
-
+    def cfgCheck(self):
+        recursiveDescendant = RecursiveDescendant(self.__productions, self.__nonTerminals, self.__terminals, self.__transitions)
+        return recursiveDescendant.check()
 
     def getProductionsForNonTerminal(self, nonTerminal):
         result = ""
