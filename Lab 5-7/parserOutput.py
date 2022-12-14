@@ -33,6 +33,8 @@ class ParserOutput:
 
         self.print_line("Productions String: " + productionString)
 
+        return productionString
+
     def compute_production_number(self, non_terminal_pair):
         non_terminal = non_terminal_pair[0]
         non_terminal_production = non_terminal_pair[1]

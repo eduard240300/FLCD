@@ -1,8 +1,10 @@
 from recursiveDescendent import RecursiveDescendent
+from parserOutput import ParserOutput
 
 class Tests:
     def __init__(self):
         self.recursiveDescendent = RecursiveDescendent({"S":["a A"],"A":["b A", "c", "epsilon"]}, ["S", "A", "C"], ["a", "b", "c"], "S", "test.out")
+        self.parserOutput = ParserOutput("test.out", {"S":["a A"],"A":["b A", "c", "epsilon"]})
 
         self.test_expand()
         self.test_advance()
@@ -52,7 +54,7 @@ class Tests:
         input_config = {"state": "f", "position": 5, "alpha": [["S", 0], ["a", -1], ["A", 0], ["b", -1], ["A", 0], ["b", -1], ["A", 0], ["b", -1], ["A", 1], ["c", -1]], "beta": [], "input_sequence": ["a", "b", "b", "b", "c"]}
         expected_output_production_string = "0 1 1 1 2 "
 
-        assert expected_output_production_string == self.recursiveDescendent.build_productions_string(input_config)
+        assert expected_output_production_string == self.parserOutput.build_productions_string(input_config)
 
 
 if __name__ == "__main__":
