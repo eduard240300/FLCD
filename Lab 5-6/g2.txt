@@ -1,0 +1,143 @@
+N = {integerN, number, characterN, booleanN, constchar, stringN, char, program, decllist, declaration, type, arraydecl, idtype, stmtlist, stmt, simplstmt, assignstmt, expression, term, factor, indexedIdentifier, iostmt, structstmt, ifstmt, elifstmt, elsestmt, whilestmt, forstmt, condition, relation, identifier, nonzerodigit, digit, letter, typeN}
+E = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, _, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, +, -, *, /, =, <, <=, ==, !=, >=, !, >, %, (, ), [, ], true, false, start, stop, array, let, while, if, else, elif, then, read, print, for, from, to, integer, character, boolean, string}
+S = program
+000: letter->A
+001: letter->B
+002: letter->C
+003: letter->D
+004: letter->E
+005: letter->F
+006: letter->G
+007: letter->H
+008: letter->I
+009: letter->J
+010: letter->K
+011: letter->L
+012: letter->M
+013: letter->N
+014: letter->O
+015: letter->P
+016: letter->Q
+017: letter->R
+018: letter->S
+019: letter->T
+020: letter->U
+021: letter->V
+022: letter->W
+023: letter->X
+024: letter->Y
+025: letter->Z
+026: letter->a
+027: letter->b
+028: letter->c
+029: letter->d
+030: letter->e
+031: letter->f
+032: letter->g
+033: letter->h
+034: letter->i
+035: letter->j
+036: letter->k
+037: letter->l
+038: letter->m
+039: letter->n
+040: letter->o
+041: letter->p
+042: letter->q
+043: letter->r
+044: letter->s
+045: letter->t
+046: letter->u
+047: letter->v
+048: letter->w
+049: letter->x
+050: letter->y
+051: letter->z
+052: nonzerodigit->1
+053: nonzerodigit->2
+054: nonzerodigit->3
+055: nonzerodigit->4
+056: nonzerodigit->5
+057: nonzerodigit->6
+058: nonzerodigit->7
+059: nonzerodigit->8
+060: nonzerodigit->9
+061: digit->0
+062: digit->nonzerodigit
+063: digit->digit digit
+064: digit->epsilon
+065: integerN->+ number
+066: integerN-> -number
+067: integerN->number
+068: integerN->0
+069: number->nonzerodigit
+070: number->nonzerodigit digit
+071: characterN->' letter '
+072: characterN->' digit '
+073: booleanN->true
+074: booleanN->false
+075: constchar->" stringN "
+076: stringN->char
+077: char->letter
+078: char->digit
+079: char->char char
+080: char->epsilon
+081: program->start decllist stmtlist stop
+082: decllist->declaration
+083: decllist->declaration decllist
+084: declaration->let idtype identifier = typeN
+085: declaration->let idtype identifier
+086: identifier->e
+087: typeN->integerN
+088: typeN->constchar
+089: typeN->booleanN
+090: typeN->characterN
+091: type->integer
+092: type->character
+093: type->boolean
+094: type->string
+095: arraydecl->type [ number ]
+096: idtype->type
+097: idtype->arraydecl
+098: stmtlist->stmt
+099: stmtlist->epsilon
+100: stmtlist->stmt stmtlist
+101: stmt->simplstmt
+102: stmt->structstmt
+103: simplstmt->assignstmt
+104: simplstmt->iostmt
+105: assignstmt->identifier = expression
+106: expression->expression + term
+107: expression->expression - term
+108: expression->expression % term
+109: expression->term
+110: term->term * factor
+111: term->term / factor
+112: term->factor
+113: term->integerN
+114: factor->( expression )
+115: factor->identifier
+116: factor->indexedIdentifier
+117: indexedIdentifier->indentifier [ number ]
+118: iostmt->read identifier
+119: iostmt->print identifier
+120: structstmt->ifstmt
+121: structstmt->whilestmt
+122: structstmt->forstmt
+123: ifstmt->if condition then stmtlist elifstmt elsestmt stop if
+124: elifstmt->elif condition then
+125: elifstmt->elifstmt elifstmt
+126: elifstmt->epsilon
+127: elsestmt->else then stmtlist
+128: elsestmt->epsilon
+129: whilestmt->while condition do stmtlist stop while
+130: identifierN->identifier
+131: identifierN->indexedIdentifier
+132: forstmt->for identifierN from expression to expression then stmtlist stop for
+133: condition->expression relation expression
+134: relation-><
+135: relation-><=
+136: relation->==
+137: relation->!=
+138: relation->>=
+139: relation->>

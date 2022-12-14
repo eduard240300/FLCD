@@ -1,0 +1,7 @@
+N = {S, A, C}
+E = {a, b, c}
+S = S
+001: S->a A
+002: A->b A
+003: A->c
+004: A->epsilon
