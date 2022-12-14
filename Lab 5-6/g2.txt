@@ -67,7 +67,7 @@ S = program
 063: digit->digit digit
 064: digit->epsilon
 065: integerN->+ number
-066: integerN-> -number
+066: integerN->- number
 067: integerN->number
 068: integerN->0
 069: number->nonzerodigit
