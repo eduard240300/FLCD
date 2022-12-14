@@ -1,9 +1,13 @@
+from parserOutput import ParserOutput
+
 class RecursiveDescendent:
-    def __init__(self, productions, nonTerminals, terminals, transitions):
+    def __init__(self, productions, nonTerminals, terminals, transitions, outFile):
         self.__productions = productions # P
         self.__nonTerminals = nonTerminals # N
         self.__terminals = terminals # E
         self.__transitions = transitions # S
+        self.__outFile = outFile
+        self.__parserOutput = ParserOutput(outFile, self.__productions)
 
     # Formal model
     # Configuration: (s, i, alpha, beta)
@@ -108,42 +112,7 @@ class RecursiveDescendent:
 
         return config
 
-    # w does belong to L(G) - HOW
-    # Process alpha:
-    #   From left to right (reverse if stored as stack)
-    #   Skip terminal symbols
-    #   Nonterminals - index of prod
-    # Example: alpha = S1 a S2 a S3 c b S3 c
-    def buildStringOfProd(self, config):
-        prod = ""
-        i = 0
-
-        while i < len(config["alpha"]):
-            if config["alpha"][i][1] != -1:
-                production_number = self.compute_production_number(config["alpha"][i])
-                prod += str(production_number) + " "
-            i = i + 1
-
-        return prod
-
-    def compute_production_number(self, non_terminal_pair):
-        non_terminal = non_terminal_pair[0]
-        non_terminal_production = non_terminal_pair[1]
-        keys = list(self.__productions.keys())
-        production_number = 0
-
-        i = 0
-        while i < len(keys):
-            if keys[i] == non_terminal:
-                production_number += int(non_terminal_production)
-                i = len(keys)
-            else:
-                production_number += len(self.__productions[keys[i]])
-            i = i + 1
-
-        return production_number
-
-    def check(self, input_sequence):
+    def validate_input_sequence(self, input_sequence):
         if type(input_sequence) != list:
             input_string = input_sequence
 
@@ -154,43 +123,47 @@ class RecursiveDescendent:
 
             input_sequence = input_string.split(" ")
 
-        for sign in input_sequence:
-            if sign not in self.__terminals:
-                print(sign + " is not a terminal!")
+        for word in input_sequence:
+            if word not in self.__terminals:
+                print(word + " is not a terminal!")
                 return None
 
         return self.__check(input_sequence)
-
 
     # Algorithm Descendent Recursive
     # INPUT: G, w = a0 a1 ... an
     # initial configuration (s, i, alpha, beta)
     def __check(self, input_sequence):
         config = {"state": "q", "position": 0, "alpha": [], "beta": [self.__transitions], "input_sequence": input_sequence}
+        self.__parserOutput.print_config(config, "Initial configuration")
 
         while (config["state"] != "f") and (config["state"] != "e"):
             if config["state"] == "q":
                 if (config["position"] == len(config["input_sequence"])) and (len(config["beta"]) == 0):
                     config = self.success(config)
+                    self.__parserOutput.print_config(config, "Success")
                 else:
                     if (len(config["beta"]) > 0) and (config["beta"][0] in self.__nonTerminals):
                         config = self.expand(config)
+                        self.__parserOutput.print_config(config, "Expand")
                     else:
                         if (len(config["beta"]) > 0) and (config["beta"][0] == config["input_sequence"][int(config["position"])]):
                             config = self.advance(config)
+                            self.__parserOutput.print_config(config, "Advance")
                         else:
                             config = self.momentaryInsuccess(config)
+                            self.__parserOutput.print_config(config, "Momentary Insuccess")
             else:
                 if config["state"] == "b":
                     if (len(config["alpha"]) > 0) and (config["alpha"][-1][0] in self.__terminals):
                         config = self.back(config)
+                        self.__parserOutput.print_config(config, "Back")
                     elif (len(config["alpha"]) > 0):
                         config = self.anotherTry(config)
+                        self.__parserOutput.print_config(config, "Another Try")
                     else:
-                        print("The sequence was not accepted!")
-                        return None
+                        self.__parserOutput.print_line("\nThe sequence was not accepted!")
         if config["state"] == "e" or len(config["beta"]) > 0:
-            print("The sequence was not accepted!")
-            return None
+            self.__parserOutput.print_line("\nThe sequence was not accepted!")
         else:
-            return self.buildStringOfProd(config)
+            self.__parserOutput.build_productions_string(config)

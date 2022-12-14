@@ -3,7 +3,7 @@ from recursiveDescendent import RecursiveDescendent
 
 def run_menu(gr):
     options = [gr.getNonTerminals, gr.getTerminals, gr.getProductions, gr.cfgCheck, gr.getProductionsForNonTerminal]
-    recursiveDescendent = RecursiveDescendent(gr.getProductions(), gr.getNonTerminals(), gr.getTerminals(), gr.getTransitions())
+    recursiveDescendent = RecursiveDescendent(gr.getProductions(), gr.getNonTerminals(), gr.getTerminals(), gr.getTransitions(), "g1.out")
 
     while True:
         print("1. Show Non Terminals")
@@ -20,11 +20,7 @@ def run_menu(gr):
             return
         elif choice == 4:
             input_sequence = input("Input sequence: ")
-            productionString = recursiveDescendent.check(input_sequence)
-            if productionString == None:
-                pass
-            else:
-                print("Production string: " + productionString)
+            recursiveDescendent.validate_input_sequence(input_sequence)
         elif choice == 5:
             nonTerminal = input("Non Terminal: ")
             productions = options[choice - 1](nonTerminal)

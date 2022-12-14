@@ -2,7 +2,7 @@ from recursiveDescendent import RecursiveDescendent
 
 class Tests:
     def __init__(self):
-        self.recursiveDescendent = RecursiveDescendent({"S":["a A"],"A":["b A", "c", "epsilon"]}, ["S", "A", "C"], ["a", "b", "c"], "S")
+        self.recursiveDescendent = RecursiveDescendent({"S":["a A"],"A":["b A", "c", "epsilon"]}, ["S", "A", "C"], ["a", "b", "c"], "S", "test.out")
 
         self.test_expand()
         self.test_advance()
@@ -10,7 +10,7 @@ class Tests:
         self.test_back()
         self.test_anotherTry()
         self.test_success()
-        self.test_buildStringOfProd()
+        self.test_build_productions_string()
 
     def test_expand(self):
         input_config = {"state": "q", "position": 0, "alpha": [], "beta": ["S"], "input_sequence": ["a", "b", "b", "b", "c"]}
@@ -48,11 +48,11 @@ class Tests:
 
         assert expected_output_config == self.recursiveDescendent.success(input_config)
 
-    def test_buildStringOfProd(self):
+    def test_build_productions_string(self):
         input_config = {"state": "f", "position": 5, "alpha": [["S", 0], ["a", -1], ["A", 0], ["b", -1], ["A", 0], ["b", -1], ["A", 0], ["b", -1], ["A", 1], ["c", -1]], "beta": [], "input_sequence": ["a", "b", "b", "b", "c"]}
         expected_output_production_string = "0 1 1 1 2 "
 
-        assert expected_output_production_string == self.recursiveDescendent.buildStringOfProd(input_config)
+        assert expected_output_production_string == self.recursiveDescendent.build_productions_string(input_config)
 
 
 if __name__ == "__main__":
