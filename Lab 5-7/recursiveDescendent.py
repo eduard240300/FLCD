@@ -7,7 +7,7 @@ class RecursiveDescendent:
         self.__terminals = terminals # E
         self.__transitions = transitions # S
         self.__outFile = outFile
-        self.__parserOutput = ParserOutput(outFile, self.__productions)
+        self.__parserOutput = ParserOutput(outFile, self.__productions, self.__transitions, self.__terminals, self.__nonTerminals)
 
     # Formal model
     # Configuration: (s, i, alpha, beta)
@@ -34,12 +34,14 @@ class RecursiveDescendent:
         terminal = self.__productions[non_terminal][0]
         if terminal != "epsilon":
             terminals = terminal.split(" ")
+        else:
+            terminals = ["epsilon"]
 
-            config["beta"] = config["beta"][1:]
-            i = len(terminals) - 1
-            while i >= 0:
-                config["beta"].insert(0, terminals[i])
-                i = i - 1
+        config["beta"] = config["beta"][1:]
+        i = len(terminals) - 1
+        while i >= 0:
+            config["beta"].insert(0, terminals[i])
+            i = i - 1
 
         config["alpha"].append([non_terminal, 0])
 
@@ -51,7 +53,8 @@ class RecursiveDescendent:
         terminal = config["beta"][0]
         config["beta"] = config["beta"][1:]
         config["alpha"].append([terminal, -1])
-        config["position"] = config["position"] + 1
+        if terminal != 'epsilon':
+            config["position"] = config["position"] + 1
 
         return config
 
@@ -82,10 +85,11 @@ class RecursiveDescendent:
         config["alpha"] = config["alpha"][:-1]
         terminal = self.__productions[non_terminal][non_terminal_position]
         if terminal == "epsilon":
-            length = 0
+            terminals = ["epsilon"]
         else:
             terminals = terminal.split(" ")
-            length = len(terminals)
+
+        length = len(terminals)
         config["beta"] = config["beta"][length:]
 
         if non_terminal_position + 1 < len(self.__productions[non_terminal]):
@@ -94,10 +98,13 @@ class RecursiveDescendent:
             terminal = self.__productions[non_terminal][non_terminal_position + 1]
             if terminal != "epsilon":
                 terminals = terminal.split(" ")
-                i = len(terminals) - 1
-                while i >= 0:
-                    config["beta"].insert(0, terminals[i])
-                    i = i - 1
+            else:
+                terminals = ["epsilon"]
+
+            i = len(terminals) - 1
+            while i >= 0:
+                config["beta"].insert(0, terminals[i])
+                i = i - 1
         elif config["position"] == 0 and non_terminal == "S":
             config["state"] = "e"
         else:
@@ -147,7 +154,11 @@ class RecursiveDescendent:
                         config = self.expand(config)
                         self.__parserOutput.print_config(config, "Expand")
                     else:
-                        if (len(config["beta"]) > 0) and (config["beta"][0] == config["input_sequence"][int(config["position"])]):
+                        if (len(config["beta"]) > 0) and \
+                                (((config["position"] < len(config["input_sequence"])) and\
+                                (config["beta"][0] == config["input_sequence"][int(config["position"])])) or \
+                                ((config["position"] == len(config["input_sequence"])) and \
+                                (config["beta"][0] == "epsilon"))):
                             config = self.advance(config)
                             self.__parserOutput.print_config(config, "Advance")
                         else:
@@ -167,3 +178,4 @@ class RecursiveDescendent:
             self.__parserOutput.print_line("\nThe sequence was not accepted!")
         else:
             self.__parserOutput.build_productions_string(config)
+            self.__parserOutput.get_parse_tree(config)
